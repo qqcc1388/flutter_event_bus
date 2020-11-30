@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_event_bus/event_bus/event_bus_util.dart';
-import 'package:flutter_event_bus/event_bus/event_login_success.dart';
+import 'package:flutter_event_bus/event_bus/event_login.dart';
 import 'package:flutter_event_bus/pages/page_e.dart';
 
 class PageA extends StatefulWidget {
@@ -13,6 +13,7 @@ class _PageAState extends State<PageA> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   var loginSuccessEvent;
+  var logoutEvent;
 
   Map params = {
     'a': 'a100',
@@ -23,11 +24,14 @@ class _PageAState extends State<PageA> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     print('A object initState');
-    loginSuccessEvent = eventBus.on((event) {
-      print('page A received msg');
+    loginSuccessEvent = eventBus.on<LoginSuccessEvent>((event) {
+      print('page A received loginSuccessEvent msg');
       setState(() {
         params = event.userInfo;
       });
+    });
+    logoutEvent = eventBus.on<LogoutEvent>((event) {
+      print('page A received logoutEvent msg');
     });
     super.initState();
   }
@@ -62,7 +66,13 @@ class _PageAState extends State<PageA> with AutomaticKeepAliveClientMixin {
                     'd': 'd401',
                   }));
                 },
-                child: Text('点击发送消息'),
+                child: Text('点击发送loginSuccess消息'),
+              ),
+              FlatButton(
+                      onPressed: () {
+                  eventBus.emit(LogoutEvent());
+                },
+                child: Text('点击发送logout消息'),
               ),
               Text(params['a']),
             ],
@@ -73,6 +83,7 @@ class _PageAState extends State<PageA> with AutomaticKeepAliveClientMixin {
   @override
   void dispose() {
     eventBus.off(loginSuccessEvent);
+    eventBus.off(logoutEvent);
     super.dispose();
   }
 }

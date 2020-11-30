@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_event_bus/event_bus/event_bus_util.dart';
+import 'package:flutter_event_bus/event_bus/event_login.dart';
 
 class PageD extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _PageDState extends State<PageD> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   var loginSuccessEvent;
+  var logoutEvent;
 
   Map params = {
     'a': 'a100',
@@ -21,13 +23,17 @@ class _PageDState extends State<PageD> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     print('D object initState');
-    loginSuccessEvent = eventBus.on((event) {
-      print('page D received msg');
+    loginSuccessEvent = eventBus.on<LoginSuccessEvent>((event) {
+      print('page D received loginSuccessEvent msg');
       //监听数据
       setState(() {
         params = event.userInfo;
       });
     });
+    logoutEvent = eventBus.on<LogoutEvent>((event) {
+      print('page D received logoutEvent msg');
+    });
+
     super.initState();
   }
 
@@ -42,7 +48,7 @@ class _PageDState extends State<PageD> with AutomaticKeepAliveClientMixin {
   @override
   void dispose() {
     eventBus.off(loginSuccessEvent);
-
+    eventBus.off(logoutEvent);
     super.dispose();
   }
 }

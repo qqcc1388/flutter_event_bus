@@ -42,8 +42,8 @@ class EventBusUtils {
   }
 
   /// 移除steam
-  void off(StreamSubscription steam) {
-    steam.cancel();
+  void off(StreamSubscription stream) {
+    stream.cancel();
   }
 }
 

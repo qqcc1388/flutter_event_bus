@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_event_bus/event_bus/event_bus_util.dart';
-import 'package:flutter_event_bus/event_bus/event_login_success.dart';
+import 'package:flutter_event_bus/event_bus/event_login.dart';
 
 class PageE extends StatefulWidget {
   @override
@@ -11,8 +11,8 @@ class _PageEState extends State<PageE> {
   var loginSuccessEvent;
   @override
   void initState() {
-    loginSuccessEvent = eventBus.on((event) {
-      print('page E received msg');
+    loginSuccessEvent = eventBus.on<LoginSuccessEvent>((event) {
+      print('page E received loginSuccessEvent msg');
       // print('object == ${event.userInfo}');
     });
     super.initState();
@@ -31,12 +31,6 @@ class _PageEState extends State<PageE> {
                 'c': 'c301',
                 'd': 'd401',
               }));
-              // EventBusUtils.getInstance().fire(LoginSuccessEvent({
-              //   'a': 'a101',
-              //   'b': 'b201',
-              //   'c': 'c301',
-              //   'd': 'd401',
-              // }));
             },
             child: Text('点击发送消息')),
       ),
