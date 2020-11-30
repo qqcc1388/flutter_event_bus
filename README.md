@@ -2,7 +2,9 @@
 
 flutter中可以是用event_bus来消息通知
 event_bus使用的是[event_bus](https://pub.dev/packages/event_bus) https://pub.dev/packages/event_bus 这个库，这里只介绍如果使用该plugin，以及在使用的时候遇到的一些问题
+
 本例demo下载地址：https://github.com/qqcc1388/flutter_event_bus
+
 官方给出的使用方法：
 ```
 创建消息对象
